@@ -1,6 +1,6 @@
 # Deployment Guide(For Contributors/Maintainers)
 
-This document outlines the process for deploying new versions of `odoo-xmlrpc-ts` to npm and GitHub Packages.
+This document outlines the process for deploying new versions of `@tapni/odoo-xmlrpc` to npm and GitHub Packages.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ We use GitHub Actions for automated deployments. The process is triggered when a
 
 ```bash
 {
-  "name": "odoo-xmlrpc-ts",
+  "name": "@tapni/odoo-xmlrpc",
   "version": "X.Y.Z", // Update this
   ...
 }
@@ -90,15 +90,15 @@ We follow semantic versioning (MAJOR.MINOR.PATCH):
 After deployment, verify the package is available:
 
 ```bash
-npm info odoo-xmlrpc-ts
+npm info @tapni/odoo-xmlrpc
 ```
 
 Users can then install the package using:
 
 ```bash
-npm install odoo-xmlrpc-ts
+npm install @tapni/odoo-xmlrpc
 # or
-pnpm add odoo-xmlrpc-ts
+pnpm add @tapni/odoo-xmlrpc
 ```
 
 ## Troubleshooting

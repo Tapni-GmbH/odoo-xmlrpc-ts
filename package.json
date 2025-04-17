@@ -1,7 +1,7 @@
 {
   "name": "@tapni/odoo-xmlrpc",
   "version": "1.0.0",
-  "description": "Type-safe Odoo XML-RPC client for Node.js written in TypeScript",
+  "description": "Odoo XML-RPC client for Node.js",
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

@@ -109,11 +109,13 @@ interface CustomPartner extends OdooBaseModel {
 }
 
 async function advancedExample() {
+  // Initialize client, use username/password or apiKey
   const client = new OdooClient({
     url: 'https://your-odoo-instance.com',
     db: 'your-database',
     username: 'admin',
     password: 'admin',
+    apiKey: '',
   });
 
   // Create a new partner
@@ -146,6 +148,7 @@ const client = new OdooClient({
   db: string;     // Database name
   username: string;
   password: string;
+  apiKey:string;
 });
 ```
 
