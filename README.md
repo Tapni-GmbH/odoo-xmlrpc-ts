@@ -24,19 +24,19 @@ A type-safe Odoo XML-RPC client for Node.js written in TypeScript. This package 
 ## Installation
 
 ```bash
-pnpm add odoo-xmlrpc-ts
+pnpm add @tapni/odoo-xmlrpc
 ```
 
 Using npm:
 
 ```bash
-npm install odoo-xmlrpc-ts
+npm install @tapni/odoo-xmlrpc
 ```
 
 Using yarn:
 
 ```bash
-yarn add odoo-xmlrpc-ts
+yarn add @tapni/odoo-xmlrpc
 ```
 
 ## Usage
@@ -44,22 +44,21 @@ yarn add odoo-xmlrpc-ts
 ### ESM Import
 
 ```typescript
-import { OdooClient } from 'odoo-xmlrpc-ts';
+import { OdooClient } from '@tapni/odoo-xmlrpc';
 ```
 
 ### CommonJS Require
 
 ```javascript
-const { OdooClient } = require('odoo-xmlrpc-ts');
+const { OdooClient } = require('@tapni/odoo-xmlrpc');
 ```
-
 
 ### Basic Example
 
 ```typescript
-import { OdooClient } from 'odoo-xmlrpc-ts';
+import { OdooClient } from '@tapni/odoo-xmlrpc';
 // Or for CommonJS:
-// const { OdooClient } = require('odoo-xmlrpc-ts');
+// const { OdooClient } = require('@tapni/odoo-xmlrpc');
 
 // Define your model interfaces
 interface Partner {
@@ -70,12 +69,13 @@ interface Partner {
 }
 
 async function example() {
-  // Initialize client
+  // Initialize client, use username/password or apiKey
   const client = new OdooClient({
     url: 'https://your-odoo-instance.com',
     db: 'your-database',
     username: 'admin',
     password: 'admin',
+    apiKey: '',
   });
 
   try {
@@ -97,7 +97,7 @@ async function example() {
 ### Advanced Usage
 
 ```typescript
-import { OdooClient, OdooBaseModel } from 'odoo-xmlrpc-ts';
+import { OdooClient, OdooBaseModel } from '@tapni/odoo-xmlrpc';
 
 // Extend the base model interface
 interface CustomPartner extends OdooBaseModel {
@@ -205,7 +205,7 @@ Get field information for a model.
 
 Execute any method on an Odoo model. This is useful for calling custom methods or workflow actions.
 
-```typescript
+````typescript
 // Example: Confirm a sale order
 await client.execute('sale.order', 'action_confirm', [orderId]);
 
@@ -233,7 +233,7 @@ try {
     console.error('Authentication failed:', error.message);
   }
 }
-```
+````
 
 ## Development
 

@@ -19,8 +19,25 @@ export class OdooClient {
 
   constructor(config: OdooConfig) {
     this.config = config;
-    this.common = xmlrpc.createClient(`${config.url}/xmlrpc/2/common`);
-    this.object = xmlrpc.createClient(`${config.url}/xmlrpc/2/object`);
+    let baseUrl = config.url;
+    let isSecure = false;
+    let protocol = 'http://';
+
+    const hasProtocol = baseUrl.startsWith('http://') || baseUrl.startsWith('https://');
+
+    if (!hasProtocol) {
+      isSecure = config?.options?.isSecure || false;
+      protocol = isSecure ? 'https://' : 'http://';
+    }else{
+      protocol = baseUrl.startsWith('http://') ? 'http://' : 'https://';
+      isSecure = protocol === 'https://';
+      baseUrl = baseUrl.replace(protocol, '');
+    }
+
+    const createClient = isSecure ? xmlrpc.createSecureClient : xmlrpc.createClient;
+
+    this.common = createClient(`${protocol}${baseUrl}/xmlrpc/2/common`);
+    this.object = createClient(`${protocol}${baseUrl}/xmlrpc/2/object`);
   }
 
   private methodCall<T>(client: xmlrpc.Client, method: string, params: any[]): Promise<T> {
@@ -48,12 +65,16 @@ export class OdooClient {
 
   public async authenticate(): Promise<number> {
     try {
-      const uid = await this.methodCall<number>(this.common, 'authenticate', [
-        this.config.db,
-        this.config.username,
-        this.config.password,
-        {},
-      ]);
+
+      let params = [this.config.db];
+
+      if (this.config?.apiKey) {
+        params.push(this.config.apiKey);
+      } else {
+        params = [...params, this.config.username, this.config.password];
+      }
+
+      const uid = await this.methodCall<number>(this.common, 'authenticate', [...params, {}]);
 
       if (!uid) {
         throw new OdooAuthenticationError();
